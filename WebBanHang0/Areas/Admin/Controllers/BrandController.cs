@@ -9,7 +9,7 @@ using WebBanHang0.Repository;
 namespace WebBanHang0.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles ="Admin, Seller")]
     public class BrandController : Controller
     {
         private readonly DatabaseContext _databaseContext;

@@ -116,13 +116,16 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a asp-controller="Home">Home</a></li>
+								<li><a asp-controller="Home" asp-action="Index">Home</a></li>
 								<li><a asp-controller="Product">Product</a></li>
 								<li><a asp-controller="Category">Category</a></li>
 								<li><a asp-controller="Brand">Brand</a></li>
 								<li><a asp-controller="Order">Order</a></li>
-								<li><a asp-controller="User">User</a></li>
-								<li><a asp-controller="Role">Role</a></li>
+								@if (User.IsInRole("Admin"))
+								{
+									<li><a asp-controller="User">User</a></li>
+									<li><a asp-controller="Role">Role</a></li>
+								}
 							</ul>
 						</div>
 					</div>

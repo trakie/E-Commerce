@@ -10,26 +10,20 @@ namespace WebBanHang0.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/User")]
-    [Authorize]
+    [Authorize("Admin")]
     public class UserController : Controller
     {
         private readonly UserManager<AppUserModel> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly DatabaseContext _databaseContext;
 
-        public UserController(UserManager<AppUserModel> userManager, RoleManager<IdentityRole> roleManager, DatabaseContext databaseContext)
+        public UserController(UserManager<AppUserModel> userManager, RoleManager<IdentityRole> roleManager, DatabaseContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _databaseContext = databaseContext;
+            _databaseContext = context;
         }
 
-        //[HttpGet]
-        //[Route("Index")]
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _databaseContext.Users.OrderByDescending(p => p.Id).ToListAsync());
-        //}
         [HttpGet]
         [Route("Index")]
         public async Task<IActionResult> Index()
@@ -42,7 +36,6 @@ namespace WebBanHang0.Areas.Admin.Controllers
                 select new { User = u, RoleName = r.Name }
                 ).ToListAsync();
             return View(usersWithRoles);
-            return View(await _databaseContext.Users.OrderByDescending(p => p.Id).ToListAsync());
         }
 
         [HttpGet]
@@ -72,7 +65,7 @@ namespace WebBanHang0.Areas.Admin.Controllers
                 if (createUserResult.Succeeded)
                 {
                     var createUser = await _userManager.FindByEmailAsync(user.Email);
-                    var UserId = createUser.Id;
+                    var userId = createUser.Id;
                     var role = _roleManager.FindByIdAsync(user.RoleId);
                     var addToRoleResult = await _userManager.AddToRoleAsync(createUser, role.Result.Name);
                     if (!addToRoleResult.Succeeded)
@@ -87,10 +80,11 @@ namespace WebBanHang0.Areas.Admin.Controllers
                 }
                 else
                 {
-                    foreach (var error in createUserResult.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                    //foreach (var error in createUserResult.Errors)
+                    //{
+                    //    ModelState.AddModelError(string.Empty, error.Description);
+                    //}
+                    AddIdentityErrors(createUserResult);
                     return View(user);
                 }
             }

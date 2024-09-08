@@ -9,8 +9,8 @@ using WebBanHang0.Repository;
 namespace WebBanHang0.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
-    public class ProductController : Controller
+	[Authorize(Roles = "Admin, Seller")]
+	public class ProductController : Controller
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IWebHostEnvironment _webHostEnvironment;

@@ -9,8 +9,8 @@ namespace WebBanHang0.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Role")]
-    [Authorize]
-    public class RoleController : Controller
+	[Authorize(Roles = "Admin")]
+	public class RoleController : Controller
     {
 
         private readonly DatabaseContext _databaseContext;
