@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IdentityRole
+@{
+    ViewData["title"] = "Edit Role";
+}
+<h1 style="text-align: center;"> Edit Role </h1>
+<div class="col-md-9">
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label>Name</label>
+            <textarea asp-for="Name" class="form-control"></textarea>
+            <span asp-validation-for="Name" class="text-danger" />
+
+        <div class="form-group">
+            <button class="btn btn-primary">Update Role</button>
+        </div>
+
+    </form>
+    <a asp-action="Index" class="btn btn-default">Back to Category list</a>
+</div>
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="//cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('Description');
+    </script>
+}
