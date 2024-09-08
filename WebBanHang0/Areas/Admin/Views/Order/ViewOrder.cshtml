@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<OrderDetails>
 @{
     ViewData["title"] = "Order Detail";
+    decimal total = 0;
+    decimal subtotal = 0;
 }
 <h1 style="text-align: center;"> Order Detail </h1>
 <table class="table">
@@ -13,12 +15,14 @@
             <th scope="col">Product</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
-            <th scope="col">Manage</th>
+            <th scope="col">Subtotal</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
+            subtotal = item.Quantity * item.Price;
+            total += subtotal;
             <tr>
                 <th scope="row">@item.Id</th>
                 <td>@item.OrderCode</td>
@@ -27,23 +31,29 @@
                 <td>@item.Product.Name</td>
                 <td>@item.Price</td>
                 <td>@item.Quantity</td>
-@*                 <td>
-                    @if (item.Status == 1)
-                    {
-                        <span class="text text-success">Processing</span>
-                    }
-                    else
-                    {
-                        <span class="text text-danger">Processed</span>
-                    }
-                </td>
- *@
-                <td>
-                    <a asp-action="ViewOrder" asp-controller="Order" asp-route-Id="@item.OrderCode" class="btn btn-default">View</a>
-                    <a asp-action="Delete" asp-controller="Order" asp-route-Id="@item.Id" class="btn btn-default confirmDeletion">Delete</a>
-                </td>
-
+                <td>@subtotal.ToString()</td>
             </tr>
         }
+        <tr>
+            <th colspan="6"></th>
+            <td><strong>Total</strong>: </td>
+            <td>@total.ToString()</td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <select class="form-control select-update-order">
+                    <option value="1">Approve</option>
+                    <option value="0">Cancel</option>
+                </select>
+            </td>
+        </tr>
     </tbody>
 </table>
+@* @section Scripts
+{
+    <script>
+        $(document).ready(function () { 
+            $('.select-update-order')
+        })
+    </script>
+} *@

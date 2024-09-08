@@ -53,6 +53,7 @@ namespace WebBanHang0.Controllers
                 IdentityResult result = await _userManager.CreateAsync(newUser, user.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(newUser, "Default");
                     TempData["success"] = "Registered";
                     return Redirect("/account/login");
                 }

@@ -6,8 +6,8 @@ using WebBanHang0.Repository;
 namespace WebBanHang0.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
-    public class OrderController : Controller
+	[Authorize(Roles = "Admin, Seller")]
+	public class OrderController : Controller
     {
         private readonly DatabaseContext _databaseContext;
 

@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
             <label>Role</label>
-            <select asp-for="RoleId" class="form-control" asp-items="ViewBag.Roles">
+            <select asp-for="RoleId" class="form-control" asp-items="ViewBag.Roles" required>
             </select>
             <span asp-validation-for="RoleId" class="text-danger" />
         </div>
